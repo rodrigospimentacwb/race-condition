@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  postgres-compose:
+    image: postgres
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "edu"
+    volumes:
+      - ./docker-init-db.sql:/docker-entrypoint-initdb.d/docker-init-db.sql
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-compose-network
+    command: -p 5432
+
+  redis:
+    image: 'bitnami/redis:3.2.9-r3'
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=123456
+    networks:
+      - postgres-compose-network
+    depends_on:
+      - postgres-compose
+
+networks:
+  postgres-compose-network:
+    driver: bridge
