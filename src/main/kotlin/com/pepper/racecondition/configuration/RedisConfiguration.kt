@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class RedisConfiguration {
+open class RedisConfiguration {
 
     @Bean
     @Qualifier("redissonClient")
-    fun redissonSingleClient(@Value("\${spring.redis.host}") host: String,
-                             @Value("\${spring.redis.port}") port: Int,
-                             @Value("\${spring.redis.password}") password: String?,
-                             @Value("\${redis.timeout.milliseconds}") connectionTimeOut: Int?
+    open fun redissonSingleClient(@Value("\${spring.redis.host}") host: String,
+                                  @Value("\${spring.redis.port}") port: Int,
+                                  @Value("\${spring.redis.password}") password: String?,
+                                  @Value("\${redis.timeout.milliseconds}") connectionTimeOut: Int?
     ): RedissonClient {
         val nodeAddress = "$host:$port"
         val config = Config()

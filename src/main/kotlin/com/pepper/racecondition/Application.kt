@@ -6,7 +6,7 @@ import org.springframework.boot.runApplication
 import java.net.InetAddress
 
 @SpringBootApplication
-class Application
+open class Application
 
 private val logger = LogManager.getLogger(Application::class.java)
 
