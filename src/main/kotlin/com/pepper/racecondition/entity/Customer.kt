@@ -18,11 +18,11 @@ class Customer(
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
         generator="customer_id_seq")
     @Column(name = "id", updatable=false)
-    var id:Integer? = null,
+    var id:Int? = null,
     @Column(name = "name")
     val name:String = "",
     @Column(name = "secondName")
     val secondName:String = "",
     @Column(name = "age")
-    val age:Integer? = null
+    val age:Int? = null
 )

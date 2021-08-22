@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface CustomerRepository:CrudRepository<Customer,Integer> {
+interface CustomerRepository:CrudRepository<Customer,Int> {
 
     fun findByNameAndSecondName(@Param("name") name:String, @Param("secondName") secondName:String):Optional<Customer>
 }

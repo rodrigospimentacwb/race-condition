@@ -21,7 +21,7 @@ class LockManager(private val client: RedissonClient,
         logger.info("Locking {}...", key)
         val lockInstance = client.getLock(key)
 
-        return try {
+        try {
             val locked = lockInstance.tryLock(lockWaitTime, autoUnlockTime, TimeUnit.SECONDS)
             if (!locked) {
                 logger.info("{} locked.", key)
