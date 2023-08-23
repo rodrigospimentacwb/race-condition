@@ -17,8 +17,13 @@ public class PaymentController {
     @Resource
     PaymentService service;
 
-    @PostMapping(value = "/pay", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> pay(@RequestBody PaymentRequest request) {
+    @PostMapping(value = "/pay/without-lock", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> payWithoutLock(@RequestBody PaymentRequest request) {
+        return ResponseEntity.ok(service.createPaymentWithoutLock(request));
+    }
+
+    @PostMapping(value = "/pay/with-lock", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> payWithLock(@RequestBody PaymentRequest request) {
         return ResponseEntity.ok(service.createPaymentWithLock(request));
     }
 }
