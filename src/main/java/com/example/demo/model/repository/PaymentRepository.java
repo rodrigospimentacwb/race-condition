@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaymentRepository extends CrudRepository<Payment, Long> {
 
-    Optional<Payment> findByProductName(@Param("productName") String productName);
+    Optional<Payment> findByIdempotencyKey(@Param("idempotencyKey") String idempotencyKey);
 }

@@ -20,31 +20,37 @@ public class PaymentService {
     @Resource
     PaymentRepository repository;
 
-    public Payment createPaymentWithoutLock (PaymentRequest request) {
-        return persistPayment(request);
+    public Payment createPaymentWithoutLock (PaymentRequest request, String idempotencyKey) {
+        return persistPayment(request, idempotencyKey);
     }
 
-    public Payment createPaymentWithLock (PaymentRequest request) {
-
-        String key = request.getProductName() + request.getAmount();
-
-        return lockManager.applyLock(key, () -> { return persistPayment(request); });
+    public Payment createPaymentWithLock (PaymentRequest request, String idempotencyKey) {
+        return lockManager.applyLock(idempotencyKey, () -> persistPayment(request, idempotencyKey));
     }
 
-    private Payment persistPayment(PaymentRequest request) {
-        Optional<Payment> paymentFound = repository.findByProductName(request.getProductName());
+    private Payment persistPayment(PaymentRequest request, String idempotencyKey) {
+        Optional<Payment> paymentFound = repository.findByIdempotencyKey(idempotencyKey);
         try {
             Thread.sleep(300); // Simular lentidão na consulta
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(paymentFound.isPresent()) {
-            return paymentFound.get();
-        }
-        return repository.save(fillPayment(request));
+        return paymentFound.orElseGet(() -> repository.save(fillPayment(request, idempotencyKey)));
+    }
+    
+    public Optional<Payment> findById(Long id) {
+        return repository.findById(id);
     }
 
-    private Payment fillPayment(PaymentRequest request) {
-        return new Payment(request.getAmount(), request.getProductName());
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
+
+    private Payment fillPayment(PaymentRequest request, String idempotencyKey) {
+        return new Payment(request.getAmount(), request.getProductName(), idempotencyKey);
     }
 }

@@ -21,9 +21,11 @@ public class Payment {
     private Long id;
     private BigDecimal amount;
     private String productName;
+    private String idempotencyKey;
 
-    public Payment(BigDecimal amount, String productName) {
+    public Payment(BigDecimal amount, String productName, String idempotencyKey) {
         this.amount = amount;
         this.productName = productName;
+        this.idempotencyKey = idempotencyKey;
     }
 }
