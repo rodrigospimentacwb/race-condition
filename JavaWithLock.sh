@@ -1,5 +1,5 @@
 #!/bin/bash
-xargs -I % -P 8 curl --location --request POST 'localhost:8080/projeto-rest/pay' \
+xargs -I % -P 8 curl --location --request POST 'localhost:8080/race-conditin/pay/with-lock' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "productName" : "Caneta",

@@ -24,7 +24,7 @@ Use a database manager of your choice and log in Postman that is running on dock
 Call the cUrl below 
 
 ````
-xargs -I % -P 8 curl --location --request POST 'localhost:8080/projeto-rest/pay/without-lock' \
+xargs -I % -P 8 curl --location --request POST 'localhost:8080/race-condition/pay/without-lock' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "productName" : "Caneta",
@@ -39,7 +39,7 @@ Analise the Payement table. You will notice that you will have several duplicate
 Stop the project and upload it again, you will see that the table will be clean for a new test. Now call cUrl below.
 
 ````
-xargs -I % -P 8 curl --location --request POST 'localhost:8080/projeto-rest/pay/with-lock' \
+xargs -I % -P 8 curl --location --request POST 'localhost:8080/race-condition/pay/with-lock' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "productName" : "Caneta",
